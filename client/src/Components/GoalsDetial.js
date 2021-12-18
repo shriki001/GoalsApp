@@ -16,12 +16,12 @@ class GoalsDetial extends Component {
                     <Typography variant="h1" style={{ textAlign: 'center', margin: '20px auto' }}>Goals Detail</Typography>
                     <List>
                         {steps.map(s => {
-                            const { _id, name, description, complete, dueDate } = s;
+                            const { _id, name, description, completed, dueDate } = s;
                             return <div key={_id}>
                                 <ListItem alignItems="center"
                                     style={{
-                                        textAlign: 'center', opacity: complete ? 0.5 : 1,
-                                        textDecorationLine: complete ? 'line-through' : 'unset'
+                                        textAlign: 'center', opacity: completed ? 0.5 : 1,
+                                        textDecorationLine: completed ? 'line-through' : 'unset'
                                     }}>
                                     <ListItemText
                                         primary={name}

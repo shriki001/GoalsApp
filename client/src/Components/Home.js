@@ -39,12 +39,12 @@ class Home extends Component {
         const { goals_ } = this.props;
         const { goals } = goals_;
         return goals && goals.map(goal => {
-            const { _id, name, description, steps, complete, dueDate, updateAt } = goal;
+            const { _id, name, description, steps, completed, dueDate, updateAt } = goal;
             return <TableRow hover key={_id} tabIndex={-1} style={{ cursor: 'pointer' }} onClick={_ => this.renderDetailPage(_id)}>
                 <TableCell align={'center'}>{name}</TableCell>
                 <TableCell align={'center'}>{description}</TableCell>
                 <TableCell align={'center'}>{steps.length}</TableCell>
-                <TableCell align={'center'}>{JSON.stringify(complete)}</TableCell>
+                <TableCell align={'center'}>{JSON.stringify(completed)}</TableCell>
                 <TableCell align={'center'}>
                     {new Date(dueDate).toISOString().slice(0, 10)}
                 </TableCell>
@@ -82,7 +82,7 @@ class Home extends Component {
                                 <TableCell align={'center'} style={{ minWidth: 100, verticalAlign: 'baseline' }}>Goal Name</TableCell>
                                 <TableCell align={'center'} style={{ minWidth: 100, verticalAlign: 'baseline' }}>Goal Description</TableCell>
                                 <TableCell align={'center'} style={{ minWidth: 100, verticalAlign: 'baseline' }}>Steps Count</TableCell>
-                                <TableCell align={'center'} style={{ minWidth: 100, verticalAlign: 'baseline' }}>Complete</TableCell>
+                                <TableCell align={'center'} style={{ minWidth: 100, verticalAlign: 'baseline' }}>Completed</TableCell>
                                 <TableCell align={'center'} style={{ minWidth: 100, verticalAlign: 'baseline' }}>Due Date</TableCell>
                                 <TableCell
                                     align={'center'}

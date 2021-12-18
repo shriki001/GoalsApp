@@ -3,12 +3,12 @@ const GoalStep = require('../models/GoalStep');
 
 async function UpdateGoalStep(payload, res) {
     const { goal_id, step_id, toUpdate } = payload;
-    const { name, description, complete } = toUpdate;
+    const { name, description, completed } = toUpdate;
     const goal = await Goals.findById(goal_id);
     if (goal) {
         const stepIndex = goals.steps.findIndex(s => s._id === step_id);
         if (stepIndex !== -1) {
-            goals.steps[stepIndex].complete === complete;
+            goals.steps[stepIndex].completed === completed;
             goals.steps[stepIndex].name === name;
             goals.steps[stepIndex].description === description;
             goal.save()
@@ -55,5 +55,5 @@ module.exports.UpdateGoalStep = async (req, res) => {
 module.exports.CompleteGoalStep = async (req, res) => {
     const { params } = req;
     const { goal_id, step_id } = params;
-    return UpdateGoalStep({ goal_id, step_id, ...{ complete: true } }, res);
+    return UpdateGoalStep({ goal_id, step_id, ...{ completed: true } }, res);
 }

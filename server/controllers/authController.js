@@ -1,6 +1,6 @@
 
 const User = require('../models/User');
-const JWT_SECRET  = 'kasfjslkmdlj@##%$#frI45YU8N34J09J2M';
+const JWT_SECRET = 'kasfjslkmdlj@##%$#frI45YU8N34J09J2M';
 const jwt = require('jsonwebtoken');
 
 // handle errors
@@ -44,12 +44,12 @@ module.exports.Signup = async (req, res) => {
 }
 
 module.exports.Login = async (req, res) => {
-    const { email, password } = req.body;
+    const { name, password } = req.body;
     try {
-        const user = await User.login(email, password);
-        const token = createToken({ user: user._id, permissions: user.permissions });
+        const user = await User.login(name, password);
+        const token = createToken({ user: user._id });
         res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-        return res.status(200).json({ user: { permissions: user.permissions, name: user.name, email: user.email }, jwt: token });
+        return res.status(200).json({ user: user._id, jwt: token });
     }
     catch (err) {
         const errors = handleErrors(err);
@@ -65,8 +65,11 @@ module.exports.checkAuth = async (req, res) => {
                 return res.status(401).json();
             else {
                 const user = await User.findById(decodedToken.id.user);
-                const { _id } = user;
-                return res.status(200).json({ _id });
+                if (user) {
+                    const { _id } = user;
+                    return res.status(200).json({ _id });
+                }
+                else return res.status(401).json();
             }
         });
     } else return res.status(401).json();

@@ -71,5 +71,5 @@ module.exports.UpdateGoal = async (req, res) => {
 
 module.exports.CompleteGoal = async (req, res) => {
     const { id } = req.params;
-    return UpdateGoal({ id, ...{ complete: true } }, res);
+    return UpdateGoal({ id, ...{ completed: true } }, res);
 }
