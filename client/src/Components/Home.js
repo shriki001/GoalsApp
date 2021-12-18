@@ -5,20 +5,26 @@ import {
     Typography, Table, TableBody, TableCell, TableContainer,
     TableHead, TableRow, Paper, TablePagination
 } from '@material-ui/core';
+import { Tooltip } from '../tools/Tooltip';
 import { GetGoals } from '../store/actions/goalsAction'
-
+import NewGoalModal from './NewGoalModal';
 class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
             page: 0,
-            pageSize: 0
+            newGoalModalOpen: false
         }
     }
 
     componentDidMount() {
+        this.getGoals();
+    }
+
+    getGoals = _ => {
+        const { page } = this.state;
         const { GetGoals } = this.props;
-        GetGoals();
+        GetGoals(page);
     }
 
     renderDetailPage = id => {
@@ -30,14 +36,16 @@ class Home extends Component {
     renderGoals = _ => {
         const { goals_ } = this.props;
         const { goals } = goals_;
-        console.log(goals_)
         return goals && goals.map(goal => {
-            const { _id, name, description, steps, complete, updateAt } = goal;
+            const { _id, name, description, steps, complete, dueDate, updateAt } = goal;
             return <TableRow hover key={_id} tabIndex={-1} style={{ cursor: 'pointer' }} onClick={_ => this.renderDetailPage(_id)}>
                 <TableCell align={'center'}>{name}</TableCell>
                 <TableCell align={'center'}>{description}</TableCell>
                 <TableCell align={'center'}>{steps.length}</TableCell>
                 <TableCell align={'center'}>{JSON.stringify(complete)}</TableCell>
+                <TableCell align={'center'}>
+                    {new Date(dueDate).toISOString().slice(0, 10)}
+                </TableCell>
                 <TableCell align={'center'}>
                     {new Date(updateAt).toString().slice(0, 24)}
                 </TableCell>
@@ -45,23 +53,23 @@ class Home extends Component {
         });
     }
 
-    handleChangePage = _ => {
-
-    }
+    handleChangePage = (_, page) => this.setState({ page }, _ => this.getGoals());
 
     render() {
         const { goals_ } = this.props;
-        const { totalGoals } = goals_;
-        const { page, pageSize } = this.state;
+        const { totalGoals, rowPerPage } = goals_;
+        const { page, newGoalModalOpen } = this.state;
         return (
             <Paper>
+                {newGoalModalOpen && <NewGoalModal handleClose={_ => this.setState({ newGoalModalOpen: false }, _ => this.getGoals())} />}
                 <Typography variant="h1" style={{ textAlign: 'center', margin: '20px auto' }}>Goals</Typography>
+                <Tooltip start={_ => this.setState({ newGoalModalOpen: true })} title={'Create new Goal'} />
                 <TablePagination
                     rowsPerPageOptions={[]}
                     component="div"
                     count={totalGoals}
                     labelRowsPerPage={'Goals per page'}
-                    rowsPerPage={pageSize}
+                    rowsPerPage={rowPerPage}
                     page={page}
                     onChangePage={this.handleChangePage}
                 />
@@ -73,6 +81,7 @@ class Home extends Component {
                                 <TableCell align={'center'} style={{ minWidth: 100, verticalAlign: 'baseline' }}>Goal Description</TableCell>
                                 <TableCell align={'center'} style={{ minWidth: 100, verticalAlign: 'baseline' }}>Steps Count</TableCell>
                                 <TableCell align={'center'} style={{ minWidth: 100, verticalAlign: 'baseline' }}>Complete</TableCell>
+                                <TableCell align={'center'} style={{ minWidth: 100, verticalAlign: 'baseline' }}>Due Date</TableCell>
                                 <TableCell
                                     align={'center'}
                                     style={{ minWidth: 148, verticalAlign: 'baseline' }}
@@ -99,7 +108,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        GetGoals: () => dispatch(GetGoals())
+        GetGoals: (page) => dispatch(GetGoals(page))
     }
 };
 

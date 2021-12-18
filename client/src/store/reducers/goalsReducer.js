@@ -1,6 +1,7 @@
 const initState = {
     goals: [],
-    totalGoals: 0
+    totalGoals: 0,
+    rowPerPage: 2
 };
 
 const goalsReducer = (state = initState, action) => {

@@ -16,24 +16,30 @@ class GoalsDetial extends Component {
                     <Typography variant="h1" style={{ textAlign: 'center', margin: '20px auto' }}>Goals Detail</Typography>
                     <List>
                         {steps.map(s => {
-                            const { _id, name, description, complete } = s;
-                            return <>
-                                <ListItem ket={_id} alignItems="center"
+                            const { _id, name, description, complete, dueDate } = s;
+                            return <div key={_id}>
+                                <ListItem alignItems="center"
                                     style={{
                                         textAlign: 'center', opacity: complete ? 0.5 : 1,
                                         textDecorationLine: complete ? 'line-through' : 'unset'
                                     }}>
                                     <ListItemText
                                         primary={name}
+                                    />
+                                    <ListItemText
+
                                         secondary={
                                             <React.Fragment>
                                                 {description}
                                             </React.Fragment>
                                         }
                                     />
+                                    <ListItemText
+                                        primary={new Date(dueDate).toISOString().slice(0, 10)}
+                                    />
                                 </ListItem>
                                 <Divider variant="inset" component="li" />
-                            </>
+                            </div>
                         })}
                     </List>
                 </>
