@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
-
-const dbURI = `mongodb://localhost:27017/Goals`;
+const dbURI = `mongodb://db:27017/Goals`;
 
 module.exports = mongoose.connect(`${dbURI}`, {
     useNewUrlParser: true,
