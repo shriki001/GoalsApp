@@ -4,7 +4,7 @@ const helmet = require('helmet');
 const cors = require('cors');
 const morgan = require('morgan');
 const express = require('express')
-const { initClientDbConnection } = require('./mongo');
+require('./mongo');
 const PORT = 8000;
 const app = express();
 
@@ -15,5 +15,6 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false, parameterLimit: 100000, limit: '50mb' }));
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(cookieParser());
-global.clientConnection = initClientDbConnection();
+app.use('/goals', require('./routes/goals'));
+app.use('/steps', require('./routes/steps'));
 app.listen(PORT, _ => console.log('info', `Server started on port ${PORT}`))

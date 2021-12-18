@@ -4,6 +4,7 @@ import 'jquery/dist/jquery.min.js'
 import 'bootstrap/dist/js/bootstrap.min.js'
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import './App.css';
+import GoalsDetial from './Components/GoalsDetial';
 import jwt from 'jsonwebtoken';
 import Home from './Components/Home';
 
@@ -61,8 +62,8 @@ class App extends Component {
                     {/* <Route exact path="/login" render={props => <Login {...props} />} />
                     <Route exact path="/login/reset/:token" render={props => <Reset {...props} />} />
                     <ProtectedRoute exact path="/shop_report" component={ShopReport} />
-                    <ProtectedRoute exact path="/shop_report/:retailer/:id" component={ShopReportDetail} />
                 */}
+                    <Route exact path="/:id" render={props => <GoalsDetial {...props} />} />
                     <Route exact path="/" render={props => <Home {...props} />} />
                 </Switch>
             </Router >
