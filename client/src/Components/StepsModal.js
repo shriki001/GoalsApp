@@ -17,7 +17,7 @@ export default class StepsModal extends Component {
             isInAddingMode: false,
             editID: -1,
             steps: props.steps ? [...props.steps] : [],
-            newStep: { name: '', description: '', dueDate: new Date() }
+            newStep: { name: '', description: '', dueDate: props.minDate }
         };
     }
 
@@ -133,7 +133,7 @@ export default class StepsModal extends Component {
     }
 
     render() {
-        const { handleClose } = this.props;
+        const { handleClose, minDate } = this.props;
         const { isInAddingMode, newStep } = this.state;
         return (
             <Dialog onClose={handleClose}
@@ -186,6 +186,7 @@ export default class StepsModal extends Component {
                                                             margin="normal"
                                                             label={"Due Date"}
                                                             disablePast
+                                                            minDate={minDate}
                                                             value={newStep['dueDate']}
                                                             onChange={value => this.handleChangeNewStep({ target: { id: 'dueDate', value } })}
                                                         />

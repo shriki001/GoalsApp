@@ -65,8 +65,8 @@ module.exports.checkAuth = async (req, res) => {
                 return res.status(401).json();
             else {
                 const user = await User.findById(decodedToken.id.user);
-                const { permissions, name, email } = user;
-                return res.status(200).json({ permissions, name, email });
+                const { _id } = user;
+                return res.status(200).json({ _id });
             }
         });
     } else return res.status(401).json();

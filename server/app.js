@@ -17,4 +17,5 @@ app.use(bodyParser.json({ limit: '50mb' }));
 app.use(cookieParser());
 app.use('/goals', require('./routes/goals'));
 app.use('/steps', require('./routes/steps'));
+app.use('/auth', require('./routes/auth'));
 app.listen(PORT, _ => console.log('info', `Server started on port ${PORT}`))

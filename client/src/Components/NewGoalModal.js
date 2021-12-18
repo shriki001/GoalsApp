@@ -10,7 +10,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import StepsModal from './StepsModal';
 
-function NewGoalModal({ handleClose, CreateGoal }) {
+function NewGoalModal({ handleClose, CreateGoal, user }) {
     const [stepsModal, setOpenStepsModal] = useState(false);
     const fields = {
         name: 'Name', description: 'Description'
@@ -27,7 +27,7 @@ function NewGoalModal({ handleClose, CreateGoal }) {
             dueDate: Yup.date().required("*Required")
         }),
         onSubmit: values => {
-            CreateGoal(values);
+            CreateGoal({ ...values, createdBy: user._id });
             handleClose();
         }
     });
@@ -68,10 +68,8 @@ function NewGoalModal({ handleClose, CreateGoal }) {
                             label={'Due Date'}
                             value={formik.values['dueDate']}
                             disablePast
-                            onChange={time => {
-                                debugger
-                                // changeAbsDate(item, time)
-                            }}
+                            id={'dueDate'}
+                            onChange={time => formik.setFieldValue('dueDate', time)}
                         />
                     </Grid>
                 </MuiPickersUtilsProvider>
@@ -90,7 +88,7 @@ function NewGoalModal({ handleClose, CreateGoal }) {
 
     return (
         <>
-            {stepsModal && <StepsModal ChangeSteps={steps => ChangeSteps(steps)}
+            {stepsModal && <StepsModal ChangeSteps={steps => ChangeSteps(steps)} minDate={formik.values['dueDate']}
                 handleClose={_ => setOpenStepsModal(false)} steps={formik['values']['steps']} />}
             <Dialog
                 open={true}>
@@ -112,10 +110,16 @@ function NewGoalModal({ handleClose, CreateGoal }) {
     )
 }
 
+const mapStateToProps = (state) => {
+    return {
+        user: state.auth.user
+    }
+};
+
 const mapDispatchToProps = (dispatch) => {
     return {
         CreateGoal: (payload) => dispatch(CreateGoal(payload))
     }
 };
 
-export default connect(null, mapDispatchToProps)(NewGoalModal);
+export default connect(mapStateToProps, mapDispatchToProps)(NewGoalModal);

@@ -7,6 +7,7 @@ import './App.css';
 import GoalsDetial from './Components/GoalsDetial';
 import jwt from 'jsonwebtoken';
 import Home from './Components/Home';
+import Login from './Components/Login';
 
 function checkAuth(for_user) {
     const token = localStorage.getItem('jwt');
@@ -59,12 +60,13 @@ class App extends Component {
         return (
             <Router>
                 <Switch>
-                    {/* <Route exact path="/login" render={props => <Login {...props} />} />
+                    {/* 
                     <Route exact path="/login/reset/:token" render={props => <Reset {...props} />} />
                     <ProtectedRoute exact path="/shop_report" component={ShopReport} />
                 */}
-                    <Route exact path="/:id" render={props => <GoalsDetial {...props} />} />
-                    <Route exact path="/" render={props => <Home {...props} />} />
+                    <Route exact path="/" render={props => <Login {...props} />} />
+                    <Route exact path="/goals/:id" render={props => <GoalsDetial {...props} />} />
+                    <Route exact path="/goals" render={props => <Home {...props} />} />
                 </Switch>
             </Router >
         );

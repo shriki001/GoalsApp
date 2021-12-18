@@ -37,9 +37,10 @@ module.exports.GetGoals = async (req, res) => {
     //         description:'des 5',
     //     }]
     // })
+    const { user } = req;
     const page = parseInt(req.query.page || "0");
-    const total = await Goals.countDocuments({});
-    const goals = await Goals.find({})
+    const total = await Goals.countDocuments({ createdBy: user._id });
+    const goals = await Goals.find({ createdBy: user._id })
         .limit(PAGE_SIZE)
         .skip(PAGE_SIZE * page)
         .catch(err => {

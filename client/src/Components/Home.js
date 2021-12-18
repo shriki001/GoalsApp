@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { ChangeAuth } from '../store/actions/authAction';
 import {
     Typography, Table, TableBody, TableCell, TableContainer,
     TableHead, TableRow, Paper, TablePagination
@@ -19,6 +20,7 @@ class Home extends Component {
 
     componentDidMount() {
         this.getGoals();
+        this.props.ChangeAuth();
     }
 
     getGoals = _ => {
@@ -29,8 +31,8 @@ class Home extends Component {
 
     renderDetailPage = id => {
         const { history } = this.props;
-        history.push(`/${id}`);
-        return <Redirect to={`/${id}`} />
+        history.push(`/goals/${id}`);
+        return <Redirect to={`/goals/${id}`} />
     }
 
     renderGoals = _ => {
@@ -108,7 +110,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        GetGoals: (page) => dispatch(GetGoals(page))
+        GetGoals: (page) => dispatch(GetGoals(page)),
+        ChangeAuth: () => dispatch(ChangeAuth())
     }
 };
 
