@@ -16,4 +16,4 @@ app.use(bodyParser.urlencoded({ extended: false, parameterLimit: 100000, limit: 
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(cookieParser());
 global.clientConnection = initClientDbConnection();
-app.listen(PORT, _ => logger.log('info', `Server started on port ${PORT}`))
+app.listen(PORT, _ => console.log('info', `Server started on port ${PORT}`))

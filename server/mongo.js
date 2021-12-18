@@ -10,7 +10,7 @@ const initClientDbConnection = _ => {
         useUnifiedTopology: true
     });
     db.once("open", _ => {
-        logger.log('info', "client MongoDB Connection ok!");
+        console.log('info', "client MongoDB Connection ok!");
     });
     require('require-all')(__dirname + '/models');
     return db;
