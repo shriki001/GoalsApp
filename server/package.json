@@ -1,0 +1,35 @@
+{
+  "name": "goals_app_backend",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "server": "yarn && nodemon app.js"
+  },
+  "keywords": [],
+  "author": "michael.s",
+  "dependencies": {
+    "bcrypt": "5.0.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "1.4.5",
+    "cors": "^2.8.5",
+    "crypto": "1.0.1",
+    "crypto-js": "^4.0.0",
+    "express": "4.17.1",
+    "helmet": "^4.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "2.29.1",
+    "mongoose": "5.12.5",
+    "require-all": "3.0.0",
+    "uuid": "8.3.2",
+    "validator": "13.1.17"
+  },
+  "devDependencies": {
+    "eslint": "6.8.0",
+    "morgan": "^1.10.0",
+    "nodemon": "2.0.6"
+  }
+}
